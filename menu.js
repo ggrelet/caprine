@@ -118,7 +118,7 @@ if (process.platform === 'darwin') {
 	});
 }
 
-const macosTpl = [
+const macosTpl = () => [
 	{
 		label: appName,
 		submenu: [
@@ -150,6 +150,14 @@ const macosTpl = [
 				checked: config.get('block.typingIndicator'),
 				click(item) {
 					config.set('block.typingIndicator', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Ask confirmation before pasting image',
+				checked: config.get('confirmImagePaste'),
+				click(item) {
+					config.set('confirmImagePaste', item.checked);
 				}
 			},
 			{
@@ -308,7 +316,7 @@ const macosTpl = [
 	}
 ];
 
-const otherTpl = [
+const otherTpl = () => [
 	{
 		label: 'File',
 		submenu: [
@@ -403,6 +411,14 @@ const otherTpl = [
 				}
 			},
 			{
+				type: 'checkbox',
+				label: 'Ask confirmation before pasting image',
+				checked: config.get('confirmImagePaste'),
+				click(item) {
+					config.set('confirmImagePaste', item.checked);
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -473,4 +489,4 @@ const otherTpl = [
 
 const tpl = process.platform === 'darwin' ? macosTpl : otherTpl;
 
-module.exports = electron.Menu.buildFromTemplate(tpl);
+module.exports = () => electron.Menu.buildFromTemplate(tpl());

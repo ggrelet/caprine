@@ -197,7 +197,7 @@ if (!isDev && process.platform !== 'linux') {
 }
 
 app.on('ready', () => {
-	electron.Menu.setApplicationMenu(appMenu);
+	electron.Menu.setApplicationMenu(appMenu());
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
@@ -223,6 +223,7 @@ app.on('ready', () => {
 					// User selected send
 					webContents.paste();
 					config.set('confirmImagePaste', !checkboxChecked);
+					electron.Menu.setApplicationMenu(appMenu());
 				}
 			});
 		} else {
